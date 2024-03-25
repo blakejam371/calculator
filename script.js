@@ -84,7 +84,9 @@ function operate(a, op, b) {
 }
 
 function inputDecimal() {
-  displayValue += '.';
+  if(!displayValue.includes('.')) {
+    displayValue += '.';
+  }
 }
 
 function positiveNegative(number) {
