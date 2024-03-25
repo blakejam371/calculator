@@ -1,114 +1,109 @@
-const screen = document.querySelector('#screen');
-const clear = document.querySelector('#clear');
-clear.addEventListener('click', clearCalculator);
-const openBrackets = document.querySelector('#openBrackets');
-openBrackets.addEventListener('click', () => {
-  screen.innerText += '(';
-});
-const closeBrackets = document.querySelector('#closeBrackets');
-closeBrackets.addEventListener('click', () => {
-  screen.innerText += ')';
-});
-const modulo = document.querySelector('#modulo');
-modulo.addEventListener('click', () => {
-  screen.innerText += '%';
-});
-const seven = document.querySelector('#seven');
-seven.addEventListener('click', () => {
-  screen.innerText += '7';
-});
-const eight = document.querySelector('#eight');
-eight.addEventListener('click', () => {
-  screen.innerText += '8';
-});
-const nine = document.querySelector('#nine');
-nine.addEventListener('click', () => {
-  screen.innerText += '9';
-});
-const divide = document.querySelector('#divide');
-divide.addEventListener('click', () => {
-  screen.innerText += '÷';
-});
-const four = document.querySelector('#four');
-four.addEventListener('click', () => {
-  screen.innerText += '4';
-});
-const five = document.querySelector('#five');
-five.addEventListener('click', () => {
-  screen.innerText += '5';
-});
-const six = document.querySelector('#six');
-six.addEventListener('click', () => {
-  screen.innerText += '6';
-});
-const multiply = document.querySelector('#multiply');
-multiply.addEventListener('click', () => {
-  screen.innerText += 'x';
-});
-const one = document.querySelector('#one');
-one.addEventListener('click', () => {
-  screen.innerText += '1';
-});
-const two = document.querySelector('#two');
-two.addEventListener('click', () => {
-  screen.innerText += '2';
-});
-const three = document.querySelector('#three');
-three.addEventListener('click', () => {
-  screen.innerText += '3';
-});
-const subtract = document.querySelector('#subtract');
-subtract.addEventListener('click', () => {
-  screen.innerText += '-';
-});
-const zero = document.querySelector('#zero');
-zero.addEventListener('click', () => {
-  screen.innerText += '0';
-});
-const decimal = document.querySelector('#decimal');
-decimal.addEventListener('click', () => {
-  screen.innerText += '.';
-});
-const equals = document.querySelector('#equals');
-equals.addEventListener('click', () => {
-  screen.innerText += '=';
-});
-const add = document.querySelector('#add');
-add.addEventListener('click', () => {
-  screen.innerText += '+';
-});
-const firstNumber = 0;
-const operator = '';
-const secondNumber = 0;
+let displayValue = 0;
+let firstNumber = null;
+let secondNumber =  null;
+let operator = null;
+let buttons = document.querySelectorAll('button');
+let result = null;
+updateDisplay();
+clickButton();
 
-function addition(a, b) {
-  return a + b;
+function updateDisplay() {
+  const display = document.querySelector('#display');
+  display.innerText = displayValue;
+};
+
+function clickButton() {
+  for(let button of buttons) {
+      button.addEventListener('click', () => {
+          if(button.classList.contains('number')) {
+              inputNumber(button.value);
+              updateDisplay();
+          } else if(button.classList.contains('operator')) {
+              inputOperator(button.value);
+          } else if(button.classList.contains('equals')) {
+              operate(firstNumber, operator, secondNumber);
+              updateDisplay();
+          } else if(button.classList.contains('decimal')) {
+              inputDecimal();
+              updateDisplay();
+          } else if(button.classList.contains('percent')) {
+              inputPercent(displayValue);
+              updateDisplay();
+          } else if(button.classList.contains('positiveNegative')) {
+              positiveNegative(displayValue);
+              updateDisplay();
+          } else if(button.classList.contains('clear')) {
+              clear();
+              updateDisplay();
+          }
+      }
+  )}
 }
 
-function subtraction(a, b) {
-  return a - b;
-}
-
-function multiplication(a, b) {
-  return a * b;
-}
-
-function division(a, b) {
-  return a / b;
-}
-
-function operate(a, operator, b) {
-  if (operator == '+') {
-    addition(a,b);
-  } else if (operator == '-') {
-    subtraction(a,b);
-  } else if (operator == '*') {
-    multiplication(a,b);
-  } else if (operator == '/') {
-    division(a,b);
+function inputNumber(number) {
+  if(operator === null) {
+    if(displayValue === 0) {
+      displayValue = number;
+    } else {
+      displayValue += number;
+    }
+    firstNumber = displayValue;
+  } else {
+    if(displayValue === firstNumber) {
+      displayValue = number;
+    } else {
+      displayValue += number;
+    }
+    secondNumber = displayValue;
   }
 }
 
-function clearCalculator() {
+function inputOperator(str) {
+  if(operator === null && firstNumber !== null && secondNumber === null) {
+    operator = str;
+  }
+}
 
+function operate(a, op, b) {
+  if (op == '+') {
+    result = +a + +b;
+  } else if (op == '-') {
+    result = +a - +b;
+  } else if (op == '*') {
+    result = +a * +b;
+  } else if (op == '/') {
+    result = +a / +b;
+  }
+  displayValue = result;
+  firstNumber = result;
+  operator = null;
+  secondNumber = null;
+  if (result === null) {
+    clear();
+  };
+}
+
+function inputDecimal() {
+  displayValue += '.';
+}
+
+function positiveNegative(number) {
+  displayValue = -number;
+  if(firstNumber !== null && operator === null && secondNumber === null) {
+    firstNumber = -firstNumber;
+  } else if (firstNumber !== null & operator !== null & secondNumber !== null) {
+    secondNumber = -secondNumber;
+  }
+}
+
+function inputPercent(number) {
+  displayValue = number/100;
+}
+
+function clear() {
+  displayValue = 0;
+  firstNumber = null;
+  secondNumber =  null;
+  operator = null;
+  result = null;
 }
