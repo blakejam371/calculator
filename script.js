@@ -9,8 +9,13 @@ clickButton();
 
 window.addEventListener('keydown', (event) => {
   const key = event.key;
-  if(event.key === 'Backspace' || event.key === 'Delete') {
-    if(firstNumber !== null && operator !== null && secondNumber !== null) {
+
+  if (key === 'Enter') {
+    event.preventDefault();
+  }
+  
+  if (key === 'Backspace' || key === 'Delete') {
+    if (firstNumber !== null && operator !== null && secondNumber !== null) {
       secondNumber = null;
       displayValue = firstNumber;
     } else if (firstNumber !== null && operator !== null && secondNumber === null) {
@@ -19,8 +24,28 @@ window.addEventListener('keydown', (event) => {
       firstNumber = null;
       displayValue = 0;
     }
+    updateDisplay();
+    return;
   }
-  updateDisplay();
+
+  if (key >= 0 && key <= 9) {
+    inputNumber(key);
+    updateDisplay();
+  } else if (['+', '-', '*', '/'].includes(key)) {
+    inputOperator(key);
+  } else if (key === '.') {
+    inputDecimal();
+    updateDisplay();
+  } else if (key === '%') {
+    inputPercent(displayValue);
+    updateDisplay();
+  } else if (key === '=' || key === 'Enter') {
+    operate(firstNumber, operator, secondNumber);
+    updateDisplay();
+  } else if (key === 'Escape') {
+    clear();
+    updateDisplay();
+  }
 });
 
 function updateDisplay() {

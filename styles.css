@@ -83,3 +83,9 @@ button:active {
 .clear:hover {
   background-color: #d00101;
 }
+
+p { 
+  font-size: 1.2em;
+  margin-top: 20px;
+  text-align: center;
+}
