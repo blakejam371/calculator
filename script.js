@@ -2,6 +2,7 @@ let displayValue = 0;
 let firstNumber = null;
 let secondNumber =  null;
 let operator = null;
+let secondOperator = null;
 let buttons = document.querySelectorAll('button');
 let result = null;
 updateDisplay();
@@ -74,7 +75,7 @@ function operate(a, op, b) {
   } else if (op == '/') {
     result = +a / +b;
   }
-  displayValue = result;
+  displayValue = roundNumber(result);
   firstNumber = result;
   operator = null;
   secondNumber = null;
@@ -108,4 +109,12 @@ function clear() {
   secondNumber =  null;
   operator = null;
   result = null;
+}
+
+function roundNumber(number) {
+  if (Number.isInteger(number)) {
+    return number;
+  } else {
+    return parseFloat(number.toFixed(3));
+  }
 }
