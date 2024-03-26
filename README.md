@@ -1,0 +1,1 @@
+This is a simple calculator project built as part of TheOdinProject's curriculum. Designed to test current understanding of HTML, CSS and JS. 
