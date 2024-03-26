@@ -125,7 +125,9 @@ function positiveNegative(number) {
 }
 
 function inputPercent(number) {
-  displayValue = number/100;
+  result = number/100;
+  displayValue = result;
+  firstNumber = result;
 }
 
 function clear() {
