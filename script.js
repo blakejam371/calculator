@@ -2,7 +2,6 @@ let displayValue = 0;
 let firstNumber = null;
 let secondNumber =  null;
 let operator = null;
-let secondOperator = null;
 let buttons = document.querySelectorAll('button');
 let result = null;
 updateDisplay();
@@ -62,6 +61,10 @@ function inputNumber(number) {
 function inputOperator(str) {
   if(operator === null && firstNumber !== null && secondNumber === null) {
     operator = str;
+  } else if (operator !== null && firstNumber !== null & secondNumber !== null) {
+    operate(firstNumber, operator, secondNumber);
+    updateDisplay();
+    operator = str;
   }
 }
 
@@ -73,7 +76,12 @@ function operate(a, op, b) {
   } else if (op == '*') {
     result = +a * +b;
   } else if (op == '/') {
-    result = +a / +b;
+    if (b === 0 || b === '0') {
+      alert('Stop Dividing by Zero!');
+      clear();    
+    } else {
+      result = +a / +b;
+    }
   }
   displayValue = roundNumber(result);
   firstNumber = result;
