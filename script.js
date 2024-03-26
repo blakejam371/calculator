@@ -83,14 +83,15 @@ function operate(a, op, b) {
       result = +a / +b;
     }
   }
+
   displayValue = roundNumber(result);
   firstNumber = result;
   operator = null;
   secondNumber = null;
   if (result === null) {
     clear();
-  };
-}
+  }
+};
 
 function inputDecimal() {
   if(!displayValue.includes('.')) {
