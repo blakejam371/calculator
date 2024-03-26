@@ -7,6 +7,22 @@ let result = null;
 updateDisplay();
 clickButton();
 
+window.addEventListener('keydown', (event) => {
+  const key = event.key;
+  if(event.key === 'Backspace' || event.key === 'Delete') {
+    if(firstNumber !== null && operator !== null && secondNumber !== null) {
+      secondNumber = null;
+      displayValue = firstNumber;
+    } else if (firstNumber !== null && operator !== null && secondNumber === null) {
+      operator = null;
+    } else if (firstNumber !== null && operator === null && secondNumber === null) {
+      firstNumber = null;
+      displayValue = 0;
+    }
+  }
+  updateDisplay();
+});
+
 function updateDisplay() {
   const display = document.querySelector('#display');
   display.innerText = displayValue;
@@ -127,3 +143,4 @@ function roundNumber(number) {
     return parseFloat(number.toFixed(3));
   }
 }
+
